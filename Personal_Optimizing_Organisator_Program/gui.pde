@@ -16,7 +16,23 @@
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:211023:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
+  window1.setVisible(true);
+  fill(255,0,0);
+  window1.text(frameCount, window1.width/2, window1.height/2);
+  window1.background(random(255),random(255));
 } //_CODE_:button1:211023:
+
+synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:417619:
+  appc.background(230);
+} //_CODE_:window1:417619:
+
+public void textfield1_change1(GTextField source, GEvent event) { //_CODE_:textfield1:489195:
+  println("textfield1 - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:textfield1:489195:
+
+public void textfield2_change1(GTextField source, GEvent event) { //_CODE_:textfield2:749516:
+  println("textfield2 - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:textfield2:749516:
 
 
 
@@ -45,6 +61,19 @@ public void createGUI(){
   label3.setText("My label");
   label3.setLocalColorScheme(GCScheme.SCHEME_15);
   label3.setOpaque(false);
+  window1 = GWindow.getWindow(this, "Ny Task", 0, 0, 500, 400, JAVA2D);
+  window1.noLoop();
+  window1.setActionOnClose(G4P.CLOSE_WINDOW);
+  window1.addDrawHandler(this, "win_draw1");
+  textfield1 = new GTextField(window1, 20, 20, 120, 30, G4P.SCROLLBARS_NONE);
+  textfield1.setText("Navn");
+  textfield1.setOpaque(true);
+  textfield1.addEventHandler(this, "textfield1_change1");
+  textfield2 = new GTextField(window1, 20, 290, 450, 90, G4P.SCROLLBARS_NONE);
+  textfield2.setText("Beskrivelse");
+  textfield2.setOpaque(true);
+  textfield2.addEventHandler(this, "textfield2_change1");
+  window1.loop();
 }
 
 // Variable declarations 
@@ -53,3 +82,6 @@ GButton button1;
 GLabel label1; 
 GLabel label2; 
 GLabel label3; 
+GWindow window1;
+GTextField textfield1; 
+GTextField textfield2; 

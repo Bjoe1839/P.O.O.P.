@@ -12,7 +12,7 @@ void setup() {
   createGUI();
   customGUI();
   
-  db = new SQLite(this, ".sqlite" ); //åben database filen
+  db = new SQLite(this, "POOP.sqlite" ); //åben database filen
 
   stroke(255);
   topScreen = round(height*0.08);
@@ -26,12 +26,20 @@ void draw() {
 
   clock();
 }
+void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:490104:
+}
 
 void customGUI() {
   button1.setFont(new Font("Ariel", Font.PLAIN, 60));
   label1.setFont(new Font("Ariel", Font.PLAIN, 25));
   label2.setFont(new Font("Ariel", Font.PLAIN, 20));
   label3.setFont(new Font("Ariel", Font.PLAIN, 25));
+  
+  window1.setLocation(710,300);
+  dropList1 = new GDropList(window1, 10, 10, width-20, 400, 6, 30);
+  String[] te = {"tt","yy","uu"};
+  dropList1.setItems(te, 0);
+  dropList1.addEventHandler(window1, "dropList1_click1");
 }
 
 void labelText() {
@@ -71,7 +79,7 @@ void clock() {
 
 void createTask() {
   if (db.connect()) {
-    db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values (Lav Ting,Beskrivelse,"+9+","+30+","+10+","+30+");");
+    db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values ('Lav Ting', 'Beskrivelse', '"+9+"', '"+30+"', '"+10+"', '"+30+"');");
   }
   db.close();
 }
