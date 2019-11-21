@@ -17,22 +17,41 @@
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:211023:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
   window1.setVisible(true);
-  fill(255,0,0);
-  window1.text(frameCount, window1.width/2, window1.height/2);
-  window1.background(random(255),random(255));
 } //_CODE_:button1:211023:
 
 synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:417619:
-  appc.background(230);
+  appc.background(200);
 } //_CODE_:window1:417619:
 
 public void textfield1_change1(GTextField source, GEvent event) { //_CODE_:textfield1:489195:
   println("textfield1 - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:textfield1:489195:
 
-public void textfield2_change1(GTextField source, GEvent event) { //_CODE_:textfield2:749516:
-  println("textfield2 - GTextField >> GEvent." + event + " @ " + millis());
-} //_CODE_:textfield2:749516:
+public void button2_click1(GButton source, GEvent event) { //_CODE_:button2:425020:
+  println("button2 - GButton >> GEvent." + event + " @ " + millis());
+  window1.setVisible(false);
+} //_CODE_:button2:425020:
+
+public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:836926:
+  println("button3 - GButton >> GEvent." + event + " @ " + millis());
+  
+  
+  
+  
+  window1.setVisible(false);
+} //_CODE_:button3:836926:
+
+public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:425632:
+  println("dropList3 - GDropList >> GEvent." + event + " @ " + millis());
+} //_CODE_:dropList1:425632:
+
+public void dropList2_click1(GDropList source, GEvent event) { //_CODE_:dropList2:972917:
+  println("dropList4 - GDropList >> GEvent." + event + " @ " + millis());
+} //_CODE_:dropList2:972917:
+
+public void textarea1_change1(GTextArea source, GEvent event) { //_CODE_:textarea1:524978:
+  println("textarea1 - GTextArea >> GEvent." + event + " @ " + millis());
+} //_CODE_:textarea1:524978:
 
 
 
@@ -61,18 +80,32 @@ public void createGUI(){
   label3.setText("My label");
   label3.setLocalColorScheme(GCScheme.SCHEME_15);
   label3.setOpaque(false);
-  window1 = GWindow.getWindow(this, "Ny Task", 0, 0, 500, 400, JAVA2D);
+  window1 = GWindow.getWindow(this, "Ny Task", 20, 80, 500, 400, JAVA2D);
   window1.noLoop();
-  window1.setActionOnClose(G4P.CLOSE_WINDOW);
+  window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
-  textfield1 = new GTextField(window1, 20, 20, 120, 30, G4P.SCROLLBARS_NONE);
-  textfield1.setText("Navn");
+  textfield1 = new GTextField(window1, 20, 20, 240, 30, G4P.SCROLLBARS_NONE);
+  textfield1.setPromptText("Navn");
   textfield1.setOpaque(true);
   textfield1.addEventHandler(this, "textfield1_change1");
-  textfield2 = new GTextField(window1, 20, 290, 450, 90, G4P.SCROLLBARS_NONE);
-  textfield2.setText("Beskrivelse");
-  textfield2.setOpaque(true);
-  textfield2.addEventHandler(this, "textfield2_change1");
+  button2 = new GButton(window1, 360, 340, 50, 40);
+  button2.setText("✖");
+  button2.setLocalColorScheme(GCScheme.RED_SCHEME);
+  button2.addEventHandler(this, "button2_click1");
+  button3 = new GButton(window1, 430, 340, 50, 40);
+  button3.setText("✔");
+  button3.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  button3.addEventHandler(this, "button3_click1");
+  dropList1 = new GDropList(window1, 280, 20, 90, 192, 5, 25);
+  dropList1.setItems(loadStrings("list_425632"), 0);
+  dropList1.addEventHandler(this, "dropList1_click1");
+  dropList2 = new GDropList(window1, 390, 20, 90, 192, 5, 25);
+  dropList2.setItems(loadStrings("list_972917"), 0);
+  dropList2.addEventHandler(this, "dropList2_click1");
+  textarea1 = new GTextArea(window1, 20, 220, 460, 110, G4P.SCROLLBARS_NONE);
+  textarea1.setPromptText("Beskrivelse");
+  textarea1.setOpaque(false);
+  textarea1.addEventHandler(this, "textarea1_change1");
   window1.loop();
 }
 
@@ -84,4 +117,8 @@ GLabel label2;
 GLabel label3; 
 GWindow window1;
 GTextField textfield1; 
-GTextField textfield2; 
+GButton button2; 
+GButton button3; 
+GDropList dropList1; 
+GDropList dropList2; 
+GTextArea textarea1; 
