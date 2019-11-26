@@ -81,21 +81,42 @@ void clock() {
 }
 
 
-void createTask() {
-  if (db.connect()) {
-
-    println(dropList1.getSelectedIndex());
-    
-    
-    int sHour = (dropList1.getSelectedIndex()-1)/4 + 8; //deles med 4 fordi der er 4 værdier med samme time
-    int eHour = (dropList2.getSelectedIndex()-1)/4 + 8;
-    
-    int sMin = (dropList1.getSelectedIndex()-1)%4 * 15; //modulu 4 fordi hver 4 minuttal er ens
-    int eMin = (dropList2.getSelectedIndex()-1)%4 * 15;
-    
+void closeWindow() {
+  textfield1.setText("");
+  textarea1.setText("");
+  dropList1.setSelected(0);
+  dropList2.setSelected(0);
+  
+  window1.setVisible(false);
+}
 
 
-    db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values ('"+textfield1.getText()+"', '"+textarea1.getText()+"', '"+sHour+"', '"+sMin+"', '"+eHour+"', '"+eMin+"');");
+boolean createTask() {
+  if (db.connect()) { //<>//
+
+    //kun hvis der er valgt et tidspunkt og navn
+    if (dropList1.getSelectedIndex() != 0 && dropList2.getSelectedIndex() != 0 && textfield1.getText() != "") {
+      
+
+      int sHour = (dropList1.getSelectedIndex()-1)/4 + 8; //deles med 4 fordi der er 4 værdier med samme time
+      int eHour = (dropList2.getSelectedIndex()-1)/4 + 8;
+
+      int sMin = (dropList1.getSelectedIndex()-1)%4 * 15; //modulu 4 fordi hver 4 minuttal er ens
+      int eMin = (dropList2.getSelectedIndex()-1)%4 * 15;
+
+      //kun hvis starttidspunktet er før sluttidspunktet
+      if (eHour > sHour || eHour == sHour && eMin > sMin) {
+        
+        //indsæt valgte data i database
+        db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values ('"+textfield1.getText()+"', '"+textarea1.getText()+"', '"+sHour+"', '"+sMin+"', '"+eHour+"', '"+eMin+"');");
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
   db.close();
+  return true;
 }
