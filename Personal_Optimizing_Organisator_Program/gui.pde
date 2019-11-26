@@ -19,6 +19,14 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2110
   window1.setVisible(true);
 } //_CODE_:button1:211023:
 
+public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:886627:
+  println("button4 - GButton >> GEvent." + event + " @ " + millis());
+  if (bit.connect()) {
+    bit.execute("DELETE FROM Tasks");
+  }
+  bit.close();
+} //_CODE_:button4:886627:
+
 synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:417619:
   appc.background(200);
 } //_CODE_:window1:417619:
@@ -79,6 +87,10 @@ public void createGUI(){
   label3.setText("My label");
   label3.setLocalColorScheme(GCScheme.SCHEME_15);
   label3.setOpaque(false);
+  button4 = new GButton(this, 30, 830, 80, 40);
+  button4.setText("Delete all tasks");
+  button4.setLocalColorScheme(GCScheme.RED_SCHEME);
+  button4.addEventHandler(this, "button4_click1");
   window1 = GWindow.getWindow(this, "Ny Task", 20, 80, 500, 400, JAVA2D);
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
@@ -118,6 +130,7 @@ GButton button1;
 GLabel label1; 
 GLabel label2; 
 GLabel label3; 
+GButton button4; 
 GWindow window1;
 GTextField textfield1; 
 GButton button2; 
