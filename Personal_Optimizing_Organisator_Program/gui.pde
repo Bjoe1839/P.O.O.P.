@@ -36,6 +36,7 @@ public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:8369
   println("button3 - GButton >> GEvent." + event + " @ " + millis());
   
   if (createTask()) closeWindow();
+  else label4.setText("Check om navn og tidspunkt er korrekt");
     
 } //_CODE_:button3:836926:
 
@@ -104,6 +105,10 @@ public void createGUI(){
   textarea1.setPromptText("Beskrivelse");
   textarea1.setOpaque(false);
   textarea1.addEventHandler(this, "textarea1_change1");
+  label4 = new GLabel(window1, 210, 342, 140, 36);
+  label4.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
+  label4.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label4.setOpaque(false);
   window1.loop();
 }
 
@@ -120,3 +125,4 @@ GButton button3;
 GDropList dropList1; 
 GDropList dropList2; 
 GTextArea textarea1; 
+GLabel label4; 

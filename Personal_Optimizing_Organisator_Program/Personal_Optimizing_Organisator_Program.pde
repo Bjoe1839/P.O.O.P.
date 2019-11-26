@@ -37,6 +37,7 @@ void customGUI() {
   label1.setFont(new Font("Ariel", Font.PLAIN, 25));
   label2.setFont(new Font("Ariel", Font.PLAIN, 20));
   label3.setFont(new Font("Ariel", Font.PLAIN, 25));
+  label4.setFont(new Font("Ariel", Font.PLAIN, 14));
   textfield1.setFont(new Font("Ariel", Font.PLAIN, 20));
   textarea1.setFont(new Font("Ariel", Font.PLAIN, 15));
   dropList1.setFont(new Font("Ariel", Font.PLAIN, 15));
@@ -84,6 +85,7 @@ void clock() {
 void closeWindow() {
   textfield1.setText("");
   textarea1.setText("");
+  label4.setText("");
   dropList1.setSelected(0);
   dropList2.setSelected(0);
   
