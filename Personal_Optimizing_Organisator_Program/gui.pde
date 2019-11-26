@@ -35,7 +35,7 @@ public void button2_click1(GButton source, GEvent event) { //_CODE_:button2:4250
 public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:836926:
   println("button3 - GButton >> GEvent." + event + " @ " + millis());
   
-  
+  createTask();
   
   
   window1.setVisible(false);
@@ -43,6 +43,7 @@ public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:8369
 
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:425632:
   println("dropList3 - GDropList >> GEvent." + event + " @ " + millis());
+  
 } //_CODE_:dropList1:425632:
 
 public void dropList2_click1(GDropList source, GEvent event) { //_CODE_:dropList2:972917:

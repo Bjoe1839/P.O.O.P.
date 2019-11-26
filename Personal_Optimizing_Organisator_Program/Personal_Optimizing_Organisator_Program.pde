@@ -30,7 +30,7 @@ void draw() {
 void customGUI() {
   window1.setLocation(710, 300);
   window1.setVisible(false);
-  
+
   button1.setFont(new Font("Ariel", Font.PLAIN, 70));
   button2.setFont(new Font("Ariel", Font.PLAIN, 30));
   button3.setFont(new Font("Ariel", Font.PLAIN, 30));
@@ -41,7 +41,7 @@ void customGUI() {
   textarea1.setFont(new Font("Ariel", Font.PLAIN, 15));
   dropList1.setFont(new Font("Ariel", Font.PLAIN, 15));
   dropList2.setFont(new Font("Ariel", Font.PLAIN, 15));
-  
+
   //GDropList(window1, 200, 80, 100, 200, 5, 25);
 }
 
@@ -83,7 +83,19 @@ void clock() {
 
 void createTask() {
   if (db.connect()) {
-    db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values ('Lav Ting', 'Beskrivelse', '"+9+"', '"+30+"', '"+10+"', '"+30+"');");
+
+    println(dropList1.getSelectedIndex());
+    
+    
+    int sHour = (dropList1.getSelectedIndex()-1)/4 + 8; //deles med 4 fordi der er 4 værdier med samme time
+    int eHour = (dropList2.getSelectedIndex()-1)/4 + 8;
+    
+    int sMin = (dropList1.getSelectedIndex()-1)%4 * 15; //modulu 4 fordi hver 4 minuttal er ens
+    int eMin = (dropList2.getSelectedIndex()-1)%4 * 15;
+    
+
+
+    db.execute("Insert Into Tasks (Name, Description, StartHour, StartMin, EndHour, EndMin) Values ('"+textfield1.getText()+"', '"+textarea1.getText()+"', '"+sHour+"', '"+sMin+"', '"+eHour+"', '"+eMin+"');");
   }
   db.close();
 }
