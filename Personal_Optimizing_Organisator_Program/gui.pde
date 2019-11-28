@@ -22,7 +22,14 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2110
 public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:886627:
   println("button4 - GButton >> GEvent." + event + " @ " + millis());
   if (bit.connect()) {
+    //slet tasks
     bit.execute("DELETE FROM Tasks");
+    
+    //slet knapper
+    for (int i = buttons.size()-1; i >= 0; i--) {
+      buttons.get(i).dispose();
+      buttons.remove(buttons.get(i));
+    }
   }
   bit.close();
 } //_CODE_:button4:886627:
@@ -42,10 +49,9 @@ public void button2_click1(GButton source, GEvent event) { //_CODE_:button2:4250
 
 public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:836926:
   println("button3 - GButton >> GEvent." + event + " @ " + millis());
-  
+
   if (createTask()) closeWindow();
   else label4.setText("Check om navn og tidspunkt er korrekt");
-    
 } //_CODE_:button3:836926:
 
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:425632:
@@ -88,7 +94,7 @@ public void createGUI(){
   label3.setLocalColorScheme(GCScheme.SCHEME_15);
   label3.setOpaque(false);
   button4 = new GButton(this, 30, 830, 80, 40);
-  button4.setText("Delete all tasks");
+  button4.setText("Slet alle tasks");
   button4.setLocalColorScheme(GCScheme.RED_SCHEME);
   button4.addEventHandler(this, "button4_click1");
   window1 = GWindow.getWindow(this, "Ny Task", 20, 80, 500, 400, JAVA2D);
