@@ -24,12 +24,14 @@ public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:8866
   if (bit.connect()) {
     //slet tasks
     bit.execute("DELETE FROM Tasks");
-    
+
     //slet knapper
     for (int i = buttons.size()-1; i >= 0; i--) {
       buttons.get(i).dispose();
       buttons.remove(buttons.get(i));
     }
+    
+    getTasks();
   }
   bit.close();
 } //_CODE_:button4:886627:
@@ -50,8 +52,11 @@ public void button2_click1(GButton source, GEvent event) { //_CODE_:button2:4250
 public void button3_click1(GButton source, GEvent event) { //_CODE_:button3:836926:
   println("button3 - GButton >> GEvent." + event + " @ " + millis());
 
-  if (createTask()) closeWindow();
-  else label4.setText("Check om navn og tidspunkt er korrekt");
+  //hvis der bliver oprettet en task uden fejl
+  if (createTask()) {
+    getTasks();
+    closeWindow();
+  } else label4.setText("Check om navn og tidspunkt er korrekt");
 } //_CODE_:button3:836926:
 
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:425632:

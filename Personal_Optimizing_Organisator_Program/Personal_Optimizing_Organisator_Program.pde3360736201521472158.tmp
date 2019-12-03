@@ -9,7 +9,7 @@ ArrayList<Task> tasks = new ArrayList<Task>();
 //samme længde som 'tasks'. Lavet pga at GButton klassen ikke kan tilpasses med egne variable
 ArrayList<GButton> buttons = new ArrayList<GButton>();
 
-ArrayList<Break> breaks = new ArrayList<Break>();
+ArrayList<Task> breaks = new ArrayList<Task>();
 
 int topScreen, buttonScreen;
 
@@ -39,9 +39,9 @@ void draw() {
   labelText();
 
   textAlign(CORNER);
-  strokeWeight(1);
-  for (int i = 0; i < tasks.size(); i++) tasks.get(i).display();
-  for (int i = 0; i < breaks.size(); i++) breaks.get(i).display();
+  for (int i = 0; i < tasks.size(); i++) {
+    tasks.get(i).display();
+  }
 }
 
 
@@ -91,7 +91,7 @@ void clock() {
   float y = mapYVal(hour(), minute());
 
   stroke(255, 0, 10);
-  strokeWeight(5);
+  strokeWeight(2);
   //linje der markerer hvornår på dagen det er
   if (hour() >= 8 && hour() <= 16) line(0, y, width, y);
 }
@@ -157,16 +157,6 @@ void customButton(GButton source, GEvent event) {
       if (source.equals(buttons.get(i))) {
 
         bit.execute("DELETE FROM Tasks WHERE ID='"+tasks.get(i).ID+"';");
-        bit.execute("DELETE FROM Breaks WHERE Task_ID='"+tasks.get(i).ID+"';");
-
-        for (int j = breaks.size()-1; j >= 0; j--) {
-          if (breaks.get(j).task_ID == tasks.get(i).ID) {
-            breaks.remove(breaks.get(j));
-          }
-        }
-
-        bit.query("SELECT Task_ID FROM Breaks");
-
         buttons.remove(buttons.get(i));
         tasks.remove(tasks.get(i));
       }
@@ -180,17 +170,14 @@ void customButton(GButton source, GEvent event) {
 void getTasks() {
   if (bit.connect()) {
 
-    //slet og opdatér tasks, knapper og pauser
+    //slet og opdatér tasks og knapper
     for (int i = tasks.size()-1; i >= 0; i--) {
       tasks.remove(tasks.get(i));
       buttons.get(i).dispose();
       buttons.remove(buttons.get(i));
     }
 
-
     bit.query("SELECT ID, Name, Description, StartHour, StartMin, EndHour, EndMin FROM Tasks;");
-
-    StringList toBeExecuted = new StringList();
 
     while (bit.next()) {
       float startY = mapYVal(bit.getInt("StartHour"), bit.getInt("StartMin"));
@@ -202,29 +189,26 @@ void getTasks() {
       buttons.get(buttons.size()-1).setLocalColorScheme(GCScheme.RED_SCHEME);
       buttons.get(buttons.size()-1).setText("X");
       buttons.get(buttons.size()-1).addEventHandler(this, "customButton");
-
+      
       //pauser
+      println();
       float t = (buttonScreen-topScreen)/108.0; //5 min i skærmstørrelse
-
-      boolean b = true;
-      int mult = 0;
-
-      while (b) {
-        //hvor mange pauser der skal være
-        if (endY-startY > t * (mult+6)) mult += 6;
-        else b = false;
+      //hvis en task varer over 30 min:
+      if (endY-startY > t*6) {
+        bit.execute("INSERT INTO Breaks (StartY, EndY) Values ('"+(startY+t*6)+"','"+(startY+t*7)+"');");
+        
       }
-
-      for (int i = 6; i <= mult; i += 6) {
-        //kan ikke execute inde i bit.next()
-        toBeExecuted.append("INSERT INTO Breaks (Task_ID, StartY, EndY) Values ('"+bit.getInt("ID")+"','"+(startY + t*(i-1))+"','"+(startY + t*i)+"');");
-        breaks.add(new Break(bit.getInt("ID"), startY + t*(i-1), startY + t*i));
-      }
-    }
-    //indsæt pauser
-    for (String s : toBeExecuted) {
-      bit.execute(s);
+      
     }
   }
   bit.close();
 }
+
+/*
+
+8:00 - 9:00
+8:55 - 9:05
+8:05 - 9:55
+8:55 - 11:05
+
+*/
