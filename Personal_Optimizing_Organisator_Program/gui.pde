@@ -26,9 +26,13 @@ public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:8866
     bit.execute("DELETE FROM Tasks");
 
     //slet knapper
-    for (int i = buttons.size()-1; i >= 0; i--) {
-      buttons.get(i).dispose();
-      buttons.remove(buttons.get(i));
+    for (int i = removeButtons.size()-1; i >= 0; i--) {
+      removeButtons.get(i).dispose();
+    }
+    
+    //slet pauser
+    for (int i = breaks.size()-1; i >= 0; i--) {
+      breaks.remove(breaks.get(i));
     }
     
     getTasks();
@@ -84,7 +88,7 @@ public void createGUI(){
   button1.setText("+");
   button1.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   button1.addEventHandler(this, "button1_click1");
-  label1 = new GLabel(this, 20, 10, 170, 40);
+  label1 = new GLabel(this, 20, 10, 200, 40);
   label1.setText("My label");
   label1.setLocalColorScheme(GCScheme.SCHEME_15);
   label1.setOpaque(false);

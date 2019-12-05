@@ -1,4 +1,4 @@
-import de.bezier.data.sql.*; //BezierSQLib
+import de.bezier.data.sql.*; //BezierSQLib //<>//
 import java.awt.*; //til fonte
 import g4p_controls.*; //G4P GUI
 
