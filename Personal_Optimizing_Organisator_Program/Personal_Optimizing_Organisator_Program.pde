@@ -1,4 +1,4 @@
-import de.bezier.data.sql.*; //BezierSQLib
+import de.bezier.data.sql.*; //BezierSQLib //<>//
 import java.awt.*; //til fonte
 import g4p_controls.*; //G4P GUI
 
@@ -13,6 +13,13 @@ ArrayList<GButton> checkButtons = new ArrayList<GButton>();
 int topScreen, buttonScreen;
 int timerHour, timerMin;
 
+//kan ændres (anbefales 5 min pause hvert 25. min)
+int breakLength = 5;
+int breakEvery = 25;
+
+float breakLen;
+float breakDist;
+
 void setup() {
   size(600, 900);
   rectMode(CORNERS);
@@ -26,6 +33,10 @@ void setup() {
   stroke(255);
   topScreen = round(height*0.08);
   buttonScreen = round(height*0.89);
+
+  breakLen = (buttonScreen-topScreen)/(540.0/breakLength); //antal min i skærmstørrelse. 9t*60min/t = 540
+  breakDist = breakEvery/float(breakLength);
+
 
   getTasks();
 }
@@ -99,18 +110,32 @@ void clock() {
   timerHour = 0;
   timerMin = 0;
   if (breaks.size() > 0) {
-    Break nextBreak = breaks.get(0);
-    for (int i = 1; i < breaks.size(); i++) {
+    Break nextBreak = null;
+    for (int i = 0; i < breaks.size(); i++) {
+      //om pausen er efter klokkeslet
       if (breaks.get(i).startHour > hour() || breaks.get(i).startHour == hour() && breaks.get(i).startMin > minute()) {
-        if (breaks.get(i).startHour < nextBreak.startHour || breaks.get(i).startHour == nextBreak.startHour && breaks.get(i).startMin < nextBreak.startMin) {
+        if (nextBreak == null) {
+          nextBreak = breaks.get(i);
+        }
+        //om nuværende pause er tættere på klokkeslet end tidligere tætteste
+        else if (breaks.get(i).startHour < nextBreak.startHour || breaks.get(i).startHour == nextBreak.startHour && breaks.get(i).startMin < nextBreak.startMin) {
           nextBreak = breaks.get(i);
         }
       }
     }
-    timerHour = nextBreak.startHour - hour();
-    timerMin = nextBreak.startMin - minute();
+    if (nextBreak != null) {
+      timerHour = nextBreak.startHour - hour();
+      timerMin = nextBreak.startMin - minute();
+      if (timerMin < 0) {
+        timerMin = timerMin + 60;
+        timerHour--;
+      }
+    }
   }
 }
+
+
+
 
 
 float mapYVal(int hour, int min) {
@@ -236,19 +261,32 @@ void getTasks() {
 
 
       //pauser
-      float t = (buttonScreen-topScreen)/108.0; //5 min i skærmstørrelse
-
       boolean b = true;
-      int mult = 0;
+      float mult = 0;
 
-      while (b) {
+      while (b) { //<>//
         //hvor mange pauser der skal være
-        if (endY-startY > t * (mult+6)) mult += 6;
+        float g = breakLen * (mult+breakDist);
+        float e = endY-startY;
+        if (e > g) mult += breakDist;
         else b = false;
       }
 
-      for (int i = 6; i <= mult; i += 6) {
-        breaks.add(new Break(bit.getInt("ID"), startY + t*(i-1), startY + t*i, bit.getInt("StartHour"), bit.getInt("StartMin"), bit.getInt("EndHour"), bit.getInt("EndMin")));
+      for (float i = breakDist; i <= mult; i += breakDist) {
+        float sY = startY + breakLen*(i-1);
+        float eY = startY + breakLen*i;
+
+        //modsat mapYVal()
+        float sHour = map(sY, topScreen, buttonScreen, 480, 1020)/60;
+        int sMin = round((sHour - floor(sHour)) * 60);
+        sHour = floor(sHour);
+
+        float eHour = map(eY, topScreen, buttonScreen, 480, 1020)/60;
+        int eMin = round((eHour - floor(eHour)) * 60);
+        eHour = floor(eHour);
+
+
+        breaks.add(new Break(bit.getInt("ID"), sY, eY, int(sHour), sMin, int(eHour), eMin));
       }
     }
   }
