@@ -71,10 +71,6 @@ public void dropList2_click1(GDropList source, GEvent event) { //_CODE_:dropList
   println("dropList4 - GDropList >> GEvent." + event + " @ " + millis());
 } //_CODE_:dropList2:972917:
 
-public void textarea1_change1(GTextArea source, GEvent event) { //_CODE_:textarea1:524978:
-  println("textarea1 - GTextArea >> GEvent." + event + " @ " + millis());
-} //_CODE_:textarea1:524978:
-
 
 
 // Create all the GUI controls. 
@@ -88,16 +84,16 @@ public void createGUI(){
   button1.setText("+");
   button1.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   button1.addEventHandler(this, "button1_click1");
-  label1 = new GLabel(this, 20, 10, 200, 40);
+  label1 = new GLabel(this, 10, 10, 230, 40);
   label1.setText("My label");
   label1.setLocalColorScheme(GCScheme.SCHEME_15);
   label1.setOpaque(false);
-  label2 = new GLabel(this, 220, 10, 160, 40);
+  label2 = new GLabel(this, 240, 10, 110, 40);
   label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label2.setText("My label");
   label2.setLocalColorScheme(GCScheme.SCHEME_15);
   label2.setOpaque(false);
-  label3 = new GLabel(this, 450, 10, 130, 40);
+  label3 = new GLabel(this, 440, 10, 140, 40);
   label3.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
   label3.setText("My label");
   label3.setLocalColorScheme(GCScheme.SCHEME_15);
@@ -106,33 +102,29 @@ public void createGUI(){
   button4.setText("Slet alle tasks");
   button4.setLocalColorScheme(GCScheme.RED_SCHEME);
   button4.addEventHandler(this, "button4_click1");
-  window1 = GWindow.getWindow(this, "Ny Task", 20, 80, 500, 400, JAVA2D);
+  window1 = GWindow.getWindow(this, "Ny Task", 20, 80, 400, 300, JAVA2D);
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
-  textfield1 = new GTextField(window1, 20, 20, 240, 30, G4P.SCROLLBARS_NONE);
+  textfield1 = new GTextField(window1, 20, 20, 360, 30, G4P.SCROLLBARS_NONE);
   textfield1.setPromptText("Navn");
   textfield1.setOpaque(true);
   textfield1.addEventHandler(this, "textfield1_change1");
-  button2 = new GButton(window1, 360, 340, 50, 40);
+  button2 = new GButton(window1, 270, 250, 50, 40);
   button2.setText("✖");
   button2.setLocalColorScheme(GCScheme.RED_SCHEME);
   button2.addEventHandler(this, "button2_click1");
-  button3 = new GButton(window1, 430, 340, 50, 40);
+  button3 = new GButton(window1, 340, 250, 50, 40);
   button3.setText("✔");
   button3.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   button3.addEventHandler(this, "button3_click1");
-  dropList1 = new GDropList(window1, 280, 20, 90, 192, 5, 25);
+  dropList1 = new GDropList(window1, 20, 70, 110, 224, 6, 25);
   dropList1.setItems(loadStrings("list_425632"), 0);
   dropList1.addEventHandler(this, "dropList1_click1");
-  dropList2 = new GDropList(window1, 390, 20, 90, 192, 5, 25);
+  dropList2 = new GDropList(window1, 150, 70, 110, 224, 6, 25);
   dropList2.setItems(loadStrings("list_972917"), 0);
   dropList2.addEventHandler(this, "dropList2_click1");
-  textarea1 = new GTextArea(window1, 20, 220, 460, 110, G4P.SCROLLBARS_NONE);
-  textarea1.setPromptText("Beskrivelse");
-  textarea1.setOpaque(false);
-  textarea1.addEventHandler(this, "textarea1_change1");
-  label4 = new GLabel(window1, 210, 342, 140, 36);
+  label4 = new GLabel(window1, 250, 200, 140, 36);
   label4.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
   label4.setLocalColorScheme(GCScheme.RED_SCHEME);
   label4.setOpaque(false);
@@ -152,5 +144,4 @@ GButton button2;
 GButton button3; 
 GDropList dropList1; 
 GDropList dropList2; 
-GTextArea textarea1; 
 GLabel label4; 

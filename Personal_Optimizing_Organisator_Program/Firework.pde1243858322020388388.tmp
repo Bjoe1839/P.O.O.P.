@@ -1,0 +1,11 @@
+class Firework {
+  ArrayList<Spark> sparks = new ArrayList<Spark>();
+  Spark 
+  
+  
+  Firework() {
+    
+  }
+  
+  
+}

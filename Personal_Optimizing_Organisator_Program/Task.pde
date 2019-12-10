@@ -1,13 +1,12 @@
 class Task {
   int ID;
   float startY, endY;
-  String name, description;
+  String name;
   boolean checked;
 
-  Task(int ID_, String name_, String description_, float startY_, float endY_, boolean checked_) {
+  Task(int ID_, String name_, float startY_, float endY_, boolean checked_) {
     ID = ID_;
     name = name_;
-    description = description_;
     startY = startY_;
     endY = endY_;
     checked = checked_;

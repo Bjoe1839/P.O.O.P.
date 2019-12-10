@@ -10,9 +10,6 @@ ArrayList<Break> breaks = new ArrayList<Break>();
 ArrayList<GButton> removeButtons = new ArrayList<GButton>();
 ArrayList<GButton> checkButtons = new ArrayList<GButton>();
 
-Firework firework;
-int fireworkCounter;
-
 int topScreen, buttonScreen;
 int timerHour, timerMin, timerSec;
 
@@ -58,20 +55,12 @@ void draw() {
   strokeWeight(1);
   for (int i = 0; i < tasks.size(); i++) tasks.get(i).display();
   for (int i = 0; i < breaks.size(); i++) breaks.get(i).display();
-
-  if (firework != null) {
-    firework.run();
-    if (firework.exploded && firework.sparks.size() == 0 && fireworkCounter < 3) {
-      firework = new Firework();
-      fireworkCounter++;
-    }
-  }
 }
 
 
 
 void customGUI() {
-  window1.setLocation(760, 350);
+  window1.setLocation(710, 300);
   window1.setVisible(false);
 
   button1.setFont(new Font("Ariel", Font.PLAIN, 60));
@@ -284,12 +273,8 @@ void customButton(GButton source, GEvent event) {
     }
     for (int i = checkButtons.size()-1; i >= 0; i--) {
       if (source.equals(checkButtons.get(i))) {
-        if (!tasks.get(i).checked) {
-          tasks.get(i).checked = true;
-          bit.execute("UPDATE Tasks SET Checked = 1 WHERE ID = "+tasks.get(i).ID+";");
-          firework = new Firework();
-          fireworkCounter = 1;
-        }
+        tasks.get(i).checked = true;
+        bit.execute("UPDATE Tasks SET Checked = 1 WHERE ID = "+tasks.get(i).ID+";");
       }
     }
   }
