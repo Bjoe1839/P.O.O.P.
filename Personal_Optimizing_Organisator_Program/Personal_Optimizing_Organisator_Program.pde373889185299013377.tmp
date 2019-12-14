@@ -28,6 +28,7 @@ float breakDist;
 void setup() {
   size(600, 900);
   rectMode(CORNERS);
+  textSize(15);
 
   createGUI();
   customGUI();
@@ -54,7 +55,6 @@ void draw() {
   labelText();
 
   textAlign(CORNER);
-  textSize(20);
   strokeWeight(1);
   for (int i = 0; i < tasks.size(); i++) tasks.get(i).display();
   for (int i = 0; i < breaks.size(); i++) breaks.get(i).display();
@@ -128,7 +128,6 @@ void clock() {
   textAlign(RIGHT, CENTER);
   fill(255);
   stroke(255, 70);
-  textSize(15);
 
   //tal i siden + linjer
   for (int i = 8; i < 17; i++) {
@@ -147,10 +146,10 @@ void clock() {
   timerHour = 0;
   timerMin = 0;
   timerSec = 0;
-  breakNow = false;
-  workNow = false;
   if (breaks.size() > 0) {
     //om der er en pause i gang i klokkeslettet
+    breakNow = false;
+    workNow = false;
     for (int i = 0; i < breaks.size(); i++) {
       if (breaks.get(i).startHour < hour() || breaks.get(i).startHour == hour() && breaks.get(i).startMin <= minute()) {
         if (breaks.get(i).endHour > hour() || breaks.get(i).endHour == hour() && breaks.get(i).endMin > minute()) {
@@ -322,14 +321,14 @@ void getTasks() {
 
       removeButtons.add(new GButton(this, width*0.85, startY+height*0.005, 50, 50));
       removeButtons.get(removeButtons.size()-1).setLocalColorScheme(GCScheme.RED_SCHEME);
-      removeButtons.get(removeButtons.size()-1).setText("Slet");
-      removeButtons.get(removeButtons.size()-1).setFont(new Font("Ariel", Font.BOLD, 16));
+      removeButtons.get(removeButtons.size()-1).setText("X");
+      removeButtons.get(removeButtons.size()-1).setFont(new Font("Ariel", Font.BOLD, 25));
       removeButtons.get(removeButtons.size()-1).addEventHandler(this, "customButton");
 
       checkButtons.add(new GButton(this, width*0.85-60, startY+height*0.005, 50, 50));
       checkButtons.get(checkButtons.size()-1).setLocalColorScheme(GCScheme.GREEN_SCHEME);
-      checkButtons.get(checkButtons.size()-1).setText("Afslut");
-      checkButtons.get(checkButtons.size()-1).setFont(new Font("Ariel", Font.BOLD, 16));
+      checkButtons.get(checkButtons.size()-1).setText("✓");
+      checkButtons.get(checkButtons.size()-1).setFont(new Font("Ariel", Font.BOLD, 25));
       checkButtons.get(checkButtons.size()-1).addEventHandler(this, "customButton");
 
 

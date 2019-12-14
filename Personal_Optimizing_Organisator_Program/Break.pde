@@ -15,7 +15,7 @@ class Break {
 
   void display() {
     noStroke();
-    fill(0, 0, 255);
+    fill(0, 150, 255);
     rect(width*0.02, startY, width*0.94, endY);
   }
 }

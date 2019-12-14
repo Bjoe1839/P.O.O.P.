@@ -21,7 +21,7 @@ class Spark {
   }
 
   void display() {
-    strokeWeight(8);
+    strokeWeight(6);
     stroke(c, lifespan);
     point(location.x, location.y);
     strokeWeight(2);

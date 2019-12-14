@@ -15,12 +15,12 @@ class Task {
 
   void display() {
     stroke(255);
-    if (checked) fill(0, 255, 0);
+    if (checked) fill(130, 230, 130);
     else fill(170);
     
     rect(width*0.02, startY, width*0.94, endY, 5);
 
     fill(255);
-    text(name, width*0.04, startY+height*0.018);
+    text(name, width*0.04, startY+height*0.024);
   }
 }
