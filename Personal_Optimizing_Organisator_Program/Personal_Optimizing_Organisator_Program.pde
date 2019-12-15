@@ -116,9 +116,11 @@ void labelText() {
   label3.setText(hour+":"+minute+":"+second);
 }
 
+
 void clock() {
   //linje i bund og i top
   stroke(255);
+  strokeWeight(1);
   line(0, topScreen*0.9, width, topScreen*0.9);
   line(0, buttonScreen, width, buttonScreen);
 
@@ -128,6 +130,7 @@ void clock() {
   textAlign(RIGHT, CENTER);
   fill(255);
   stroke(255, 70);
+  strokeWeight(1);
   textSize(15);
 
   //tal i siden + linjer
